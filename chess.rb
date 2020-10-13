@@ -9,6 +9,7 @@ class Game
     if @player2 == @player1
       @player2 = @player2 + '1'
     end
+    @current_player = @player1
 
     @@board = {
       'A1' => Rook.new('white', 'A1'),
@@ -313,6 +314,14 @@ class Game
     end
     positions
   end
+
+  def change_player
+    if @current_player == @player1
+      @current_player = @player2
+    else
+      @current_player = @player1
+    end
+  end
 end
 
 class Rook < Game
@@ -344,6 +353,133 @@ class Knight < Game
     else
       @symbol = '♘'
     end
+  end
+
+  def valid_positions(position)
+    positions = []
+    position_letter = position[0]
+    position_number = position[1]
+    row_up = (position_number.to_i + 1).to_s
+    left_column = (position_letter.ord - 1).chr
+    row_down = (position_number.to_i - 1).to_s
+    right_column = (position_letter.ord + 1).chr
+    row_up2 = (position_number.to_i + 2).to_s
+    left_column2 = (position_letter.ord - 2).chr
+    row_down2 = (position_number.to_i - 2).to_s
+    right_column2 = (position_letter.ord + 2).chr
+    if position_letter != 'H' && position_number != '7' &&
+       position_number != '8' && @@board[(right_column + row_up2)].is_a?(Blank)
+      positions.push(right_column + row_up2)
+    elsif position_letter != 'H' && position_number != '7' && position_number != '8'
+      if @symbol == '♞'
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(right_column + row_up2)].symbol)
+          positions.push(right_column + row_up2)
+        end
+      else
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(right_column + row_up2)].symbol)
+          positions.push(right_column + row_up2)
+        end
+      end
+    end
+    if position_letter != 'G' && position_letter != 'H' &&
+       position_number != '8' && @@board[(right_column2 + row_up)].is_a?(Blank)
+      positions.push(right_column2 + row_up)
+    elsif position_letter != 'G' && position_letter != 'H' && position_number != '8'
+      if @symbol == '♞'
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(right_column2 + row_up)].symbol)
+          positions.push(right_column2 + row_up)
+        end
+      else
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(right_column2 + row_up)].symbol)
+          positions.push(right_column2 + row_up)
+        end
+      end
+    end
+    if position_letter != 'G' && position_letter != 'H' &&
+       position_number != '1' && @@board[(right_column2 + row_down)].is_a?(Blank)
+      positions.push(right_column2 + row_down)
+    elsif position_letter != 'G' && position_letter != 'H' && position_number != '1'
+      if @symbol == '♞'
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(right_column2 + row_down)].symbol)
+          positions.push(right_column2 + row_down)
+        end
+      else
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(right_column2 + row_down)].symbol)
+          positions.push(right_column2 + row_down)
+        end
+      end
+    end
+    if position_letter != 'H' && position_number != '2' &&
+       position_number != '1' && @@board[(right_column + row_down2)].is_a?(Blank)
+      positions.push(right_column + row_down2)
+    elsif position_letter != 'H' && position_number != '2' && position_number != '1'
+      if @symbol == '♞'
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(right_column + row_down2)].symbol)
+          positions.push(right_column + row_down2)
+        end
+      else
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(right_column + row_down2)].symbol)
+          positions.push(right_column + row_down2)
+        end
+      end
+    end
+    if position_letter != 'A' && position_number != '2' &&
+       position_number != '1' && @@board[(left_column + row_down2)].is_a?(Blank)
+      positions.push(left_column + row_down2)
+    elsif position_letter != 'A' && position_number != '2' && position_number != '1'
+      if @symbol == '♞'
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(left_column + row_down2)].symbol)
+          positions.push(left_column + row_down2)
+        end
+      else
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(left_column + row_down2)].symbol)
+          positions.push(left_column + row_down2)
+        end
+      end
+    end
+    if position_letter != 'A' && position_letter != 'B' &&
+       position_number != '1' && @@board[(left_column2 + row_down)].is_a?(Blank)
+      positions.push(left_column2 + row_down)
+    elsif position_letter != 'A' && position_letter != 'B' && position_number != '1'
+      if @symbol == '♞'
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(left_column2 + row_down)].symbol)
+          positions.push(left_column2 + row_down)
+        end
+      else
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(left_column2 + row_down)].symbol)
+          positions.push(left_column2 + row_down)
+        end
+      end
+    end
+    if position_letter != 'A' && position_letter != 'B' &&
+       position_number != '8' && @@board[(left_column2 + row_up)].is_a?(Blank)
+      positions.push(left_column2 + row_up)
+    elsif position_letter != 'A' && position_letter != 'B' && position_number != '8'
+      if @symbol == '♞'
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(left_column2 + row_up)].symbol)
+          positions.push(left_column2 + row_up)
+        end
+      else
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(left_column2 + row_up)].symbol)
+          positions.push(left_column2 + row_up)
+        end
+      end
+    end
+    if position_letter != 'A' && position_number != '7' &&
+       position_number != '8' && @@board[(left_column + row_up2)].is_a?(Blank)
+      positions.push(left_column + row_up2)
+    elsif position_letter != 'A' && position_number != '7' && position_number != '8'
+      if @symbol == '♞'
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(left_column + row_up2)].symbol)
+          positions.push(left_column + row_up2)
+        end
+      else
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(left_column + row_up2)].symbol)
+          positions.push(left_column + row_up2)
+        end
+      end
+    end
+    positions
   end
 end
 
@@ -515,7 +651,7 @@ class King < Game
         end
       end
     end
-    print positions
+    positions
   end
 end
 
@@ -603,5 +739,3 @@ end
 
 game = Game.new
 game.print_board
-bishop = King.new('white', 'H6')
-bishop.valid_positions('H6')
