@@ -91,7 +91,7 @@ class Game
     print '  A B C D E F G H', "\n"
   end
 
-  def valid_positions_right(position)
+  def valid_positions_right(position, board)
     positions = []
     position_letter = position[0]
     position_number = position[1]
@@ -99,14 +99,14 @@ class Game
     piece_found = false
     until right_column == 'I' || piece_found
       new_position = (right_column + position_number)
-      unless @@board[new_position].is_a?(Blank)
+      unless board[new_position].is_a?(Blank)
         piece_found = true
         if @symbol == '♜' || @symbol == '♛'
-          if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[new_position].symbol)
+          if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[new_position].symbol)
             positions.push(new_position)
           end
         else
-          if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[new_position].symbol) 
+          if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[new_position].symbol) 
             positions.push(new_position)
           end
         end
@@ -118,7 +118,7 @@ class Game
     positions
   end
 
-  def valid_positions_left(position)
+  def valid_positions_left(position, board)
     positions = []
     position_letter = position[0]
     position_number = position[1]
@@ -126,14 +126,14 @@ class Game
     piece_found = false
     until left_column == '@' || piece_found
       new_position = (left_column + position_number)
-      unless @@board[new_position].is_a?(Blank)
+      unless board[new_position].is_a?(Blank)
         piece_found = true
         if @symbol == '♜' || @symbol == '♛'
-          if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[new_position].symbol)
+          if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[new_position].symbol)
             positions.push(new_position)
           end
         else
-          if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[new_position].symbol) 
+          if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[new_position].symbol) 
             positions.push(new_position)
           end
         end
@@ -145,7 +145,7 @@ class Game
     positions
   end
 
-  def valid_positions_up(position)
+  def valid_positions_up(position, board)
     positions = []
     position_letter = position[0]
     position_number = position[1]
@@ -153,16 +153,16 @@ class Game
     piece_found = false
     until row_up == '9' || piece_found
       new_position = (position_letter + row_up)
-      if @@board[new_position].is_a?(Blank)
+      if board[new_position].is_a?(Blank)
         positions.push(new_position)
       else
         piece_found = true
         if @symbol == '♜' || @symbol == '♛'
-          if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[new_position].symbol)
+          if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[new_position].symbol)
             positions.push(new_position)
           end
         else
-          if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[new_position].symbol) 
+          if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[new_position].symbol) 
             positions.push(new_position)
           end
         end
@@ -172,7 +172,7 @@ class Game
     positions
   end
 
-  def valid_positions_down(position)
+  def valid_positions_down(position, board)
     positions = []
     position_letter = position[0]
     position_number = position[1]
@@ -180,16 +180,16 @@ class Game
     piece_found = false
     until row_down == '0' || piece_found
       new_position = (position_letter + row_down)
-      if @@board[new_position].is_a?(Blank)
+      if board[new_position].is_a?(Blank)
         positions.push(new_position)
       else
         piece_found = true
         if @symbol == '♜' || @symbol == '♛'
-          if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[new_position].symbol)
+          if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[new_position].symbol)
             positions.push(new_position)
           end
         else
-          if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[new_position].symbol) 
+          if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[new_position].symbol) 
             positions.push(new_position)
           end
         end
@@ -199,7 +199,7 @@ class Game
     positions
   end
 
-  def valid_positions_up_right(position)
+  def valid_positions_up_right(position, board)
     positions = []
     position_letter = position[0]
     position_number = position[1]
@@ -208,16 +208,16 @@ class Game
     piece_found = false
     until row_up == '9' || right_column == 'I' || piece_found
       new_position = (right_column + row_up)
-      if @@board[new_position].is_a?(Blank)
+      if board[new_position].is_a?(Blank)
         positions.push(new_position)
       else
         piece_found = true
         if @symbol == '♝' || @symbol == '♛'
-          if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[new_position].symbol)
+          if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[new_position].symbol)
             positions.push(new_position)
           end
         else
-          if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[new_position].symbol) 
+          if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[new_position].symbol) 
             positions.push(new_position)
           end
         end
@@ -228,7 +228,7 @@ class Game
     positions
   end
 
-  def valid_positions_down_right(position)
+  def valid_positions_down_right(position, board)
     positions = []
     position_letter = position[0]
     position_number = position[1]
@@ -237,16 +237,16 @@ class Game
     piece_found = false
     until row_down == '0' || right_column == 'I' || piece_found
       new_position = (right_column + row_down)
-      if @@board[new_position].is_a?(Blank)
+      if board[new_position].is_a?(Blank)
         positions.push(new_position)
       else
         piece_found = true
         if @symbol == '♝' || @symbol == '♛'
-          if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[new_position].symbol)
+          if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[new_position].symbol)
             positions.push(new_position)
           end
         else
-          if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[new_position].symbol) 
+          if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[new_position].symbol) 
             positions.push(new_position)
           end
         end
@@ -257,7 +257,7 @@ class Game
     positions
   end
 
-  def valid_positions_down_left(position)
+  def valid_positions_down_left(position, board)
     positions = []
     position_letter = position[0]
     position_number = position[1]
@@ -266,16 +266,16 @@ class Game
     piece_found = false
     until row_down == '0' || left_column == '@' || piece_found
       new_position = (left_column + row_down)
-      if @@board[new_position].is_a?(Blank)
+      if board[new_position].is_a?(Blank)
         positions.push(new_position)
       else
         piece_found = true
         if @symbol == '♝' || @symbol == '♛'
-          if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[new_position].symbol)
+          if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[new_position].symbol)
             positions.push(new_position)
           end
         else
-          if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[new_position].symbol) 
+          if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[new_position].symbol) 
             positions.push(new_position)
           end
         end
@@ -286,7 +286,7 @@ class Game
     positions
   end
 
-  def valid_positions_up_left(position)
+  def valid_positions_up_left(position, board)
     positions = []
     position_letter = position[0]
     position_number = position[1]
@@ -295,16 +295,16 @@ class Game
     piece_found = false
     until row_up == '9' || left_column == '@' || piece_found
       new_position = (left_column + row_up)
-      if @@board[new_position].is_a?(Blank)
+      if board[new_position].is_a?(Blank)
         positions.push(new_position)
       else
         piece_found = true
         if @symbol == '♝' || @symbol == '♛'
-          if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[new_position].symbol)
+          if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[new_position].symbol)
             positions.push(new_position)
           end
         else
-          if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[new_position].symbol) 
+          if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[new_position].symbol) 
             positions.push(new_position)
           end
         end
@@ -323,22 +323,17 @@ class Game
     end
   end
 
-  def king_check(position)
+  def king_check(position, colour, board)
     in_check = false
     all_valid_positions = []
-    if @@board[position].symbol == '♚'
-      colour = 'black'
-    else
-      colour = 'white'
-    end
-    @@board.each do |key, value|
+    board.each do |key, value|
       if colour == 'black'
         if !value.is_a?(Blank) && ['♙', '♘', '♗', '♖', '♕', '♔'].include?(value.symbol)
-          all_valid_positions.push(value.valid_positions(key))
+          all_valid_positions.push(value.valid_positions(key, board))
         end
       else
         if !value.is_a?(Blank) && ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(value.symbol)
-          all_valid_positions.push(value.valid_positions(key))
+          all_valid_positions.push(value.valid_positions(key, board))
         end
       end
     end
@@ -349,6 +344,24 @@ class Game
       in_check = true
     end
     in_check
+  end
+
+  def checkmate(position, colour)
+    if king_check(position, colour, @@board)
+      array = @@board[position].valid_positions(position, @@board)
+
+      board_dupe = @@board.dup
+      board_dupe[position] = Blank.new
+      array.all? do |x|
+        board_dupe[x] = King.new(colour, x)
+        checker = king_check(x, colour, board_dupe)
+        board_dupe = @@board.dup
+        board_dupe[position] = Blank.new
+        checker
+      end
+    else
+      false
+    end
   end
 
   def make_move
@@ -376,8 +389,9 @@ class Game
       end
     end
     
-    new_location = where_to_move(piece)
-    if @@board[location].is_a?(Pawn)
+    new_location = where_to_move(piece, colour)
+    if new_location.is_a?(Blank)
+    elsif @@board[location].is_a?(Pawn)
       @@board[new_location] = Pawn.new(colour, new_location)
     elsif @@board[location].is_a?(Rook)
       @@board[new_location] = Rook.new(colour, new_location)
@@ -390,6 +404,7 @@ class Game
     elsif @@board[location].is_a?(King)
       @@board[new_location] = King.new(colour, new_location)
     end
+
     if new_location.is_a?(Blank)
     elsif new_location.nil?
     else
@@ -397,8 +412,8 @@ class Game
     end
   end
 
-  def where_to_move(location)
-    moves = @@board[location].valid_positions(location)
+  def where_to_move(position, colour)
+    moves = @@board[position].valid_positions(position, @@board)
     valid = false
     if moves.empty?
       puts "This piece has no valid moves, select a different piece"
@@ -408,7 +423,23 @@ class Game
         puts "Pick a position to move your piece ('back' to go back)"
         location = gets.chomp.upcase
         if moves.include?(location)
-          valid = true
+          board_dupe = @@board.dup
+          board_dupe[location] = @@board[position].class.new(colour, location)
+          board_dupe[position] = Blank.new
+          king = ''
+          board_dupe.each do |key, value|
+            if colour == 'black' && value.symbol == '♚'
+              king = key
+            elsif colour == 'white' && value.symbol == '♔'
+              king = key
+            end
+          end
+          check = king_check(king, colour, board_dupe)
+          if check
+            puts "This move would put your king in check"
+          else
+            valid = true
+          end
         elsif @@board.key?(location)
           puts "This piece cannot move here"
         elsif location == 'BACK'
@@ -423,6 +454,105 @@ class Game
         location
       end
     end
+  end
+
+  def pawn_change
+    if @current_player == @player1
+      array = ['A8', 'B8', 'C8', 'D8', 'E8', 'F8', 'G8', 'H8']
+      array.each do |key|
+        if @@board[key].is_a?(Pawn)
+          valid = false
+          until valid
+            puts "What would you like to turn your pawn into: Rook, Bishop, Knight, Queen"
+            input = gets.chomp.downcase
+            if input == 'rook'
+              @@board[key] = Rook.new('white', key)
+              valid = true
+            elsif input == 'bishop'
+              @@board[key] = Bishop.new('white', key)
+              valid = true
+            elsif input == 'knight'
+              @@board[key] = Knight.new('white', key)
+              valid = true
+            elsif input == 'queen'
+              @@board[key] = Queen.new('white', key)
+              valid = true
+            else
+              puts "Please enter a valid piece name"
+            end
+          end
+        end
+      end
+    else
+      array = ['A1', 'B1', 'C1', 'D1', 'E1', 'F1', 'G1', 'H1']
+      array.each do |key|
+        if @@board[key].is_a?(Pawn)
+          valid = false
+          until valid
+            puts "What would you like to turn your pawn into: Rook, Bishop, Knight, Queen"
+            input = gets.chomp.downcase
+            if input == 'rook'
+              @@board[key] = Rook.new('black', key)
+              valid = true
+            elsif input == 'bishop'
+              @@board[key] = Bishop.new('black', key)
+              valid = true
+            elsif input == 'knight'
+              @@board[key] = Knight.new('black', key)
+              valid = true
+            elsif input == 'queen'
+              @@board[key] = Queen.new('black', key)
+              valid = true
+            else
+              puts "Please enter a valid piece name"
+            end
+          end
+        end
+      end
+    end
+  end
+
+  def play
+    win = false
+    until win
+      make_move
+      pawn_change
+      change_player
+      print_board
+      if @current_player == @player1
+        king = ''
+        @@board.each do |key, value|
+          if value.symbol == '♔'
+            king = key
+          end
+        end
+        if king_check(king, 'white', @@board)
+          if checkmate(king, 'white')
+            puts "Checkmate"
+            win = true
+          else
+            puts "Check"
+          end
+        end
+      else
+        king = ''
+        @@board.each do |key, value|
+          if value.symbol == '♚'
+            king = key
+          end
+        end
+        if king_check(king, 'black', @@board)
+          if checkmate(king, 'black')
+            puts "Checkmate"
+            win = true
+          else
+            puts "Check"
+          end
+        end
+      end
+    end
+    change_player
+    puts "Well done, #{@current_player} is the winner."
   end
 end
 
@@ -439,12 +569,12 @@ class Rook < Game
     @position = position
   end
 
-  def valid_positions(position)
+  def valid_positions(position, board)
     positions = []
-    positions.push(valid_positions_right(position))
-    positions.push(valid_positions_left(position))
-    positions.push(valid_positions_up(position))
-    positions.push(valid_positions_down(position))
+    positions.push(valid_positions_right(position, board))
+    positions.push(valid_positions_left(position, board))
+    positions.push(valid_positions_up(position, board))
+    positions.push(valid_positions_down(position, board))
     positions.flatten!
     positions
   end
@@ -463,7 +593,7 @@ class Knight < Game
     @position = position
   end
 
-  def valid_positions(position)
+  def valid_positions(position, board)
     positions = []
     position_letter = position[0]
     position_number = position[1]
@@ -476,113 +606,113 @@ class Knight < Game
     row_down2 = (position_number.to_i - 2).to_s
     right_column2 = (position_letter.ord + 2).chr
     if position_letter != 'H' && position_number != '7' &&
-       position_number != '8' && @@board[(right_column + row_up2)].is_a?(Blank)
+       position_number != '8' && board[(right_column + row_up2)].is_a?(Blank)
       positions.push(right_column + row_up2)
     elsif position_letter != 'H' && position_number != '7' && position_number != '8'
       if @symbol == '♞'
-        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(right_column + row_up2)].symbol)
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[(right_column + row_up2)].symbol)
           positions.push(right_column + row_up2)
         end
       else
-        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(right_column + row_up2)].symbol)
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[(right_column + row_up2)].symbol)
           positions.push(right_column + row_up2)
         end
       end
     end
     if position_letter != 'G' && position_letter != 'H' &&
-       position_number != '8' && @@board[(right_column2 + row_up)].is_a?(Blank)
+       position_number != '8' && board[(right_column2 + row_up)].is_a?(Blank)
       positions.push(right_column2 + row_up)
     elsif position_letter != 'G' && position_letter != 'H' && position_number != '8'
       if @symbol == '♞'
-        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(right_column2 + row_up)].symbol)
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[(right_column2 + row_up)].symbol)
           positions.push(right_column2 + row_up)
         end
       else
-        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(right_column2 + row_up)].symbol)
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[(right_column2 + row_up)].symbol)
           positions.push(right_column2 + row_up)
         end
       end
     end
     if position_letter != 'G' && position_letter != 'H' &&
-       position_number != '1' && @@board[(right_column2 + row_down)].is_a?(Blank)
+       position_number != '1' && board[(right_column2 + row_down)].is_a?(Blank)
       positions.push(right_column2 + row_down)
     elsif position_letter != 'G' && position_letter != 'H' && position_number != '1'
       if @symbol == '♞'
-        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(right_column2 + row_down)].symbol)
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[(right_column2 + row_down)].symbol)
           positions.push(right_column2 + row_down)
         end
       else
-        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(right_column2 + row_down)].symbol)
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[(right_column2 + row_down)].symbol)
           positions.push(right_column2 + row_down)
         end
       end
     end
     if position_letter != 'H' && position_number != '2' &&
-       position_number != '1' && @@board[(right_column + row_down2)].is_a?(Blank)
+       position_number != '1' && board[(right_column + row_down2)].is_a?(Blank)
       positions.push(right_column + row_down2)
     elsif position_letter != 'H' && position_number != '2' && position_number != '1'
       if @symbol == '♞'
-        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(right_column + row_down2)].symbol)
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[(right_column + row_down2)].symbol)
           positions.push(right_column + row_down2)
         end
       else
-        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(right_column + row_down2)].symbol)
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[(right_column + row_down2)].symbol)
           positions.push(right_column + row_down2)
         end
       end
     end
     if position_letter != 'A' && position_number != '2' &&
-       position_number != '1' && @@board[(left_column + row_down2)].is_a?(Blank)
+       position_number != '1' && board[(left_column + row_down2)].is_a?(Blank)
       positions.push(left_column + row_down2)
     elsif position_letter != 'A' && position_number != '2' && position_number != '1'
       if @symbol == '♞'
-        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(left_column + row_down2)].symbol)
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[(left_column + row_down2)].symbol)
           positions.push(left_column + row_down2)
         end
       else
-        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(left_column + row_down2)].symbol)
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[(left_column + row_down2)].symbol)
           positions.push(left_column + row_down2)
         end
       end
     end
     if position_letter != 'A' && position_letter != 'B' &&
-       position_number != '1' && @@board[(left_column2 + row_down)].is_a?(Blank)
+       position_number != '1' && board[(left_column2 + row_down)].is_a?(Blank)
       positions.push(left_column2 + row_down)
     elsif position_letter != 'A' && position_letter != 'B' && position_number != '1'
       if @symbol == '♞'
-        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(left_column2 + row_down)].symbol)
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[(left_column2 + row_down)].symbol)
           positions.push(left_column2 + row_down)
         end
       else
-        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(left_column2 + row_down)].symbol)
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[(left_column2 + row_down)].symbol)
           positions.push(left_column2 + row_down)
         end
       end
     end
     if position_letter != 'A' && position_letter != 'B' &&
-       position_number != '8' && @@board[(left_column2 + row_up)].is_a?(Blank)
+       position_number != '8' && board[(left_column2 + row_up)].is_a?(Blank)
       positions.push(left_column2 + row_up)
     elsif position_letter != 'A' && position_letter != 'B' && position_number != '8'
       if @symbol == '♞'
-        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(left_column2 + row_up)].symbol)
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[(left_column2 + row_up)].symbol)
           positions.push(left_column2 + row_up)
         end
       else
-        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(left_column2 + row_up)].symbol)
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[(left_column2 + row_up)].symbol)
           positions.push(left_column2 + row_up)
         end
       end
     end
     if position_letter != 'A' && position_number != '7' &&
-       position_number != '8' && @@board[(left_column + row_up2)].is_a?(Blank)
+       position_number != '8' && board[(left_column + row_up2)].is_a?(Blank)
       positions.push(left_column + row_up2)
     elsif position_letter != 'A' && position_number != '7' && position_number != '8'
       if @symbol == '♞'
-        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(left_column + row_up2)].symbol)
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[(left_column + row_up2)].symbol)
           positions.push(left_column + row_up2)
         end
       else
-        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(left_column + row_up2)].symbol)
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[(left_column + row_up2)].symbol)
           positions.push(left_column + row_up2)
         end
       end
@@ -604,12 +734,12 @@ class Bishop < Game
     @position = position
   end
 
-  def valid_positions(position)
+  def valid_positions(position, board)
     positions = []
-    positions.push(valid_positions_up_right(position))
-    positions.push(valid_positions_down_right(position))
-    positions.push(valid_positions_down_left(position))
-    positions.push(valid_positions_up_left(position))
+    positions.push(valid_positions_up_right(position, board))
+    positions.push(valid_positions_down_right(position, board))
+    positions.push(valid_positions_down_left(position, board))
+    positions.push(valid_positions_up_left(position, board))
     positions.flatten!
     positions
   end
@@ -628,16 +758,16 @@ class Queen < Game
     @position = position
   end
 
-  def valid_positions(position)
+  def valid_positions(position, board)
     positions = []
-    positions.push(valid_positions_up_right(position))
-    positions.push(valid_positions_down_right(position))
-    positions.push(valid_positions_down_left(position))
-    positions.push(valid_positions_up_left(position))
-    positions.push(valid_positions_right(position))
-    positions.push(valid_positions_left(position))
-    positions.push(valid_positions_up(position))
-    positions.push(valid_positions_down(position))
+    positions.push(valid_positions_up_right(position, board))
+    positions.push(valid_positions_down_right(position, board))
+    positions.push(valid_positions_down_left(position, board))
+    positions.push(valid_positions_up_left(position, board))
+    positions.push(valid_positions_right(position, board))
+    positions.push(valid_positions_left(position, board))
+    positions.push(valid_positions_up(position, board))
+    positions.push(valid_positions_down(position, board))
     positions.flatten!
     positions
   end
@@ -656,7 +786,7 @@ class King < Game
     @position = position
   end
 
-  def valid_positions(position)
+  def valid_positions(position, board)
     positions = []
     position_letter = position[0]
     position_number = position[1]
@@ -664,106 +794,106 @@ class King < Game
     left_column = (position_letter.ord - 1).chr
     row_down = (position_number.to_i - 1).to_s
     right_column = (position_letter.ord + 1).chr
-    if row_up != '9' && @@board[(position_letter + row_up)].is_a?(Blank)
+    if row_up != '9' && board[(position_letter + row_up)].is_a?(Blank)
       positions.push(position_letter + row_up)
     elsif row_up != '9'
       if @symbol == '♚'
-        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(position_letter + row_up)].symbol)
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[(position_letter + row_up)].symbol)
           positions.push(position_letter + row_up)
         end
       else
-        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(position_letter + row_up)].symbol) 
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[(position_letter + row_up)].symbol) 
           positions.push(position_letter + row_up)
         end
       end
     end
-    if row_up != '9' && right_column != 'I' && @@board[(right_column + row_up)].is_a?(Blank)
+    if row_up != '9' && right_column != 'I' && board[(right_column + row_up)].is_a?(Blank)
       positions.push(right_column + row_up)
     elsif row_up != '9' && right_column != 'I'
       if @symbol == '♚'
-        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(right_column + row_up)].symbol)
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[(right_column + row_up)].symbol)
           positions.push(right_column + row_up)
         end
       else
-        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(right_column + row_up)].symbol)
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[(right_column + row_up)].symbol)
           positions.push(right_column + row_up)
         end
       end
     end
-    if right_column != 'I' && @@board[(right_column + position_number)].is_a?(Blank)
+    if right_column != 'I' && board[(right_column + position_number)].is_a?(Blank)
       positions.push(right_column + position_number)
     elsif right_column != 'I'
       if @symbol == '♚'
-        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(right_column + position_number)].symbol)
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[(right_column + position_number)].symbol)
           positions.push(right_column + position_number)
         end
       else
-        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(right_column + position_number)].symbol) 
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[(right_column + position_number)].symbol) 
           positions.push(right_column + position_number)
         end
       end
     end
-    if right_column != 'I' && row_down != '0' && @@board[(right_column + row_down)].is_a?(Blank)
+    if right_column != 'I' && row_down != '0' && board[(right_column + row_down)].is_a?(Blank)
       positions.push(right_column + row_down)
     elsif right_column != 'I' && row_down != '0'
       if @symbol == '♚'
-        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(right_column + row_down)].symbol)
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[(right_column + row_down)].symbol)
           positions.push(right_column + row_down)
         end
       else
-        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(right_column + row_down)].symbol) 
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[(right_column + row_down)].symbol) 
           positions.push(right_column + row_down)
         end
       end
     end
-    if row_down != '0' && @@board[(position_letter + row_down)].is_a?(Blank)
+    if row_down != '0' && board[(position_letter + row_down)].is_a?(Blank)
       positions.push(position_letter + row_down)
     elsif row_down != '0'
       if @symbol == '♚'
-        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(position_letter + row_down)].symbol)
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[(position_letter + row_down)].symbol)
           positions.push(position_letter + row_down)
         end
       else
-        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(position_letter + row_down)].symbol) 
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[(position_letter + row_down)].symbol) 
           positions.push(position_letter + row_down)
         end
       end
     end
-    if row_down != '0' && left_column != '@' && @@board[(left_column + row_down)].is_a?(Blank)
+    if row_down != '0' && left_column != '@' && board[(left_column + row_down)].is_a?(Blank)
       positions.push(left_column + row_down)
     elsif row_down != '0' && left_column != '@'
       if @symbol == '♚'
-        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(left_column + row_down)].symbol)
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[(left_column + row_down)].symbol)
           positions.push(left_column + row_down)
         end
       else
-        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(left_column + row_down)].symbol) 
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[(left_column + row_down)].symbol) 
           positions.push(left_column + row_down)
         end
       end
     end
-    if left_column != '@' && @@board[(left_column + position_number)].is_a?(Blank)
+    if left_column != '@' && board[(left_column + position_number)].is_a?(Blank)
       positions.push(left_column + position_number)
     elsif left_column != '@'
       if @symbol == '♚'
-        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(left_column + position_number)].symbol)
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[(left_column + position_number)].symbol)
           positions.push(left_column + position_number)
         end
       else
-        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(left_column + position_number)].symbol) 
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[(left_column + position_number)].symbol) 
           positions.push(left_column + position_number)
         end
       end
     end
-    if row_up != '9' && left_column != '@' && @@board[(left_column + row_up)].is_a?(Blank)
+    if row_up != '9' && left_column != '@' && board[(left_column + row_up)].is_a?(Blank)
       positions.push(left_column + row_up)
     elsif row_up != '9' && left_column != '@'
       if @symbol == '♚'
-        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[(left_column + row_up)].symbol)
+        if ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[(left_column + row_up)].symbol)
           positions.push(left_column + row_up)
         end
       else
-        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(@@board[(left_column + row_up)].symbol) 
+        if ['♟︎', '♞', '♝', '♜', '♛', '♚'].include?(board[(left_column + row_up)].symbol) 
           positions.push(left_column + row_up)
         end
       end
@@ -785,63 +915,63 @@ class Pawn < Game
     @position = position
   end
 
-  def valid_positions(position)
+  def valid_positions(position, board)
     positions = []
     position_letter = position[0]
     position_number = position[1]
     if @symbol == '♟︎' ## black
       if position_number != '7'
-        if @@board[position_letter + (position_number.to_i - 1).to_s].is_a?(Blank)
+        if board[position_letter + (position_number.to_i - 1).to_s].is_a?(Blank)
           positions.push(position_letter + (position_number.to_i - 1).to_s)
         end
       else
-        if @@board[position_letter + (position_number.to_i - 1).to_s].is_a?(Blank) && @@board[position_letter + (position_number.to_i - 2).to_s].is_a?(Blank)
+        if board[position_letter + (position_number.to_i - 1).to_s].is_a?(Blank) && board[position_letter + (position_number.to_i - 2).to_s].is_a?(Blank)
           positions.push(position_letter + (position_number.to_i - 1).to_s)
           positions.push(position_letter + (position_number.to_i - 2).to_s)
-        elsif @@board[position_letter + (position_number.to_i - 1).to_s].is_a?(Blank)
+        elsif board[position_letter + (position_number.to_i - 1).to_s].is_a?(Blank)
           positions.push(position_letter + (position_number.to_i - 1).to_s)
         end
       end
       ## checking whether front right and front left are able to be attacked
       unless position_letter == 'A'
         left_column = (position_letter.ord - 1).chr
-        unless @@board[left_column + (position_number.to_i - 1).to_s].is_a?(Blank) ||
-               ['♟', '♞', '♝', '♜', '♛', '♚︎'].include?(@@board[left_column + (position_number.to_i - 1).to_s].symbol)
+        unless board[left_column + (position_number.to_i - 1).to_s].is_a?(Blank) ||
+               ['♟', '♞', '♝', '♜', '♛', '♚︎'].include?(board[left_column + (position_number.to_i - 1).to_s].symbol)
           positions.push(left_column + (position_number.to_i - 1).to_s)
         end
       end
       unless position_letter == 'H'
         right_column = (position_letter.ord + 1).chr
-        unless @@board[right_column + (position_number.to_i - 1).to_s].is_a?(Blank) ||
-               ['♟', '♞', '♝', '♜', '♛', '♚︎'].include?(@@board[right_column + (position_number.to_i - 1).to_s].symbol)
+        unless board[right_column + (position_number.to_i - 1).to_s].is_a?(Blank) ||
+               ['♟', '♞', '♝', '♜', '♛', '♚︎'].include?(board[right_column + (position_number.to_i - 1).to_s].symbol)
           positions.push(right_column + (position_number.to_i - 1).to_s)
         end
       end
     else
       if position_number != '2'
-        if @@board[position_letter + (position_number.to_i + 1).to_s].is_a?(Blank)
+        if board[position_letter + (position_number.to_i + 1).to_s].is_a?(Blank)
           positions.push(position_letter + (position_number.to_i + 1).to_s)
         end
       else
-        if @@board[position_letter + (position_number.to_i + 1).to_s].is_a?(Blank) && @@board[position_letter + (position_number.to_i + 2).to_s].is_a?(Blank)
+        if board[position_letter + (position_number.to_i + 1).to_s].is_a?(Blank) && board[position_letter + (position_number.to_i + 2).to_s].is_a?(Blank)
           positions.push(position_letter + (position_number.to_i + 1).to_s)
           positions.push(position_letter + (position_number.to_i + 2).to_s)
-        elsif @@board[position_letter + (position_number.to_i + 1).to_s].is_a?(Blank)
+        elsif board[position_letter + (position_number.to_i + 1).to_s].is_a?(Blank)
           positions.push(position_letter + (position_number.to_i + 1).to_s)
         end
       end
       ## checking whether front right and front left are able to be attacked
       unless position_letter == 'A'
         left_column = (position_letter.ord - 1).chr
-        unless @@board[left_column + (position_number.to_i + 1).to_s].is_a?(Blank) ||
-               ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[left_column + (position_number.to_i + 1).to_s].symbol)
+        unless board[left_column + (position_number.to_i + 1).to_s].is_a?(Blank) ||
+               ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[left_column + (position_number.to_i + 1).to_s].symbol)
           positions.push(left_column + (position_number.to_i + 1).to_s)
         end
       end
       unless position_letter == 'H'
         right_column = (position_letter.ord + 1).chr
-        unless @@board[right_column + (position_number.to_i + 1).to_s].is_a?(Blank) ||
-               ['♙', '♘', '♗', '♖', '♕', '♔'].include?(@@board[right_column + (position_number.to_i + 1).to_s].symbol)
+        unless board[right_column + (position_number.to_i + 1).to_s].is_a?(Blank) ||
+               ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[right_column + (position_number.to_i + 1).to_s].symbol)
           positions.push(right_column + (position_number.to_i + 1).to_s)
         end
       end
@@ -859,5 +989,4 @@ end
 
 game = Game.new
 game.print_board
-game.make_move
-game.print_board
+game.play
