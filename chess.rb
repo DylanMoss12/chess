@@ -12,14 +12,14 @@ class Game
     @current_player = @player1
 
     @@board = {
-      'A1' => Rook.new('white', 'A1'),
+      'A1' => Rook.new('white', 'A1', 'unmoved'),
       'B1' => Knight.new('white', 'B1'),
       'C1' => Bishop.new('white', 'C1'),
       'D1' => Queen.new('white', 'D1'),
-      'E1' => King.new('white', 'E1'),
+      'E1' => King.new('white', 'E1', 'unmoved'),
       'F1' => Bishop.new('white', 'F1'),
       'G1' => Knight.new('white', 'G1'),
-      'H1' => Rook.new('white', 'H1'),
+      'H1' => Rook.new('white', 'H1', 'unmoved'),
       'A2' => Pawn.new('white', 'A2'),
       'B2' => Pawn.new('white', 'B2'),
       'C2' => Pawn.new('white', 'C2'),
@@ -68,14 +68,14 @@ class Game
       'F7' => Pawn.new('black', 'F7'),
       'G7' => Pawn.new('black', 'G7'),
       'H7' => Pawn.new('black', 'H7'),
-      'A8' => Rook.new('black', 'A8'),
+      'A8' => Rook.new('black', 'A8', 'unmoved'),
       'B8' => Knight.new('black', 'B8'),
       'C8' => Bishop.new('black', 'C8'),
       'D8' => Queen.new('black', 'D8'),
-      'E8' => King.new('black', 'E8'),
+      'E8' => King.new('black', 'E8', 'unmoved'),
       'F8' => Bishop.new('black', 'F8'),
       'G8' => Knight.new('black', 'G8'),
-      'H8' => Rook.new('black', 'H8')
+      'H8' => Rook.new('black', 'H8', 'unmoved')
     }
   end
 
@@ -390,7 +390,7 @@ class Game
     end
     
     new_location = where_to_move(piece, colour)
-    if new_location.is_a?(Blank)
+    if new_location.is_a?(Blank) || new_location.nil?
     elsif @@board[location].is_a?(Pawn)
       @@board[new_location] = Pawn.new(colour, new_location)
     elsif @@board[location].is_a?(Rook)
@@ -402,7 +402,25 @@ class Game
     elsif @@board[location].is_a?(Queen)
       @@board[new_location] = Queen.new(colour, new_location)
     elsif @@board[location].is_a?(King)
-      @@board[new_location] = King.new(colour, new_location)
+      if new_location == 'G1'
+        @@board['G1'] = King.new('white', 'G1')
+        @@board['F1'] = Rook.new('white', 'F1')
+        @@board['H1'] = Blank.new
+      elsif new_location == 'C1'
+        @@board['C1'] = King.new('white', 'C1')
+        @@board['D1'] = Rook.new('white', 'D1')
+        @@board['A1'] = Blank.new
+      elsif new_location == 'G8'
+        @@board['G8'] = King.new('black', 'G8')
+        @@board['F8'] = Rook.new('black', 'F8')
+        @@board['H8'] = Blank.new
+      elsif new_location == 'C8'
+        @@board['C8'] = King.new('black', 'C8')
+        @@board['D8'] = Rook.new('black', 'D8')
+        @@board['A8'] = Blank.new
+      else
+        @@board[new_location] = King.new(colour, new_location)
+      end
     end
 
     if new_location.is_a?(Blank)
@@ -557,8 +575,8 @@ class Game
 end
 
 class Rook < Game
-  attr_accessor :symbol, :colour
-  def initialize(colour, position)
+  attr_accessor :symbol, :colour, :unmoved
+  def initialize(colour, position, moved='')
     if colour == 'black'
       @symbol = '♜'
       @colour = 'black'
@@ -567,6 +585,12 @@ class Rook < Game
       @colour = 'white'
     end
     @position = position
+
+    if moved == 'unmoved'
+      @unmoved = true
+    else
+      @unmoved = false
+    end
   end
 
   def valid_positions(position, board)
@@ -774,8 +798,8 @@ class Queen < Game
 end
 
 class King < Game
-  attr_accessor :symbol, :colour
-  def initialize(colour, position)
+  attr_accessor :symbol, :colour, :unmoved
+  def initialize(colour, position, moved='')
     if colour == 'black'
       @symbol = '♚'
       @colour = 'black'
@@ -784,6 +808,12 @@ class King < Game
       @colour = 'white'
     end
     @position = position
+
+    if moved == 'unmoved'
+      @unmoved = true
+    else
+      @unmoved = false
+    end
   end
 
   def valid_positions(position, board)
@@ -898,7 +928,162 @@ class King < Game
         end
       end
     end
+
+    # castling king
+    if @colour == 'white' && board['E1'].is_a?(King)
+      king_found = board.any? do |key, value|
+        if value.symbol == '♚'
+          true
+        end
+      end
+      if castle_right('white') && king_found
+        positions.push('G1')
+      end
+      if castle_left('white') && king_found
+        positions.push('C1')
+      end
+    elsif @colour == 'black' && board['E8'].is_a?(King)
+      king_found = board.any? do |key, value|
+        if value.symbol == '♔'
+          true
+        end
+      end
+      if castle_right('black') && king_found
+        positions.push('G8')
+      end
+      if castle_left('black') && king_found
+        positions.push('C8')
+      end
+    end
     positions
+  end
+
+  def castle_right(colour)
+    if colour == 'white'
+      board = @@board.dup
+      board1 = @@board.dup
+      board1['E1'] = Blank.new
+      board1['F1'] = King.new('white', 'F1')
+      board2 = @@board.dup
+      board2['E1'] = Blank.new
+      board2['G1'] = King.new('white', 'G1')
+      board3 = @@board.dup
+      board3['E1'] = Blank.new
+      board3['H1'] = King.new('white', 'H1')
+      if @@board['E8'].is_a?(King)
+        board['E8'] = Blank.new
+        board1['E8'] = Blank.new
+        board2['E8'] = Blank.new
+        board3['E8'] = Blank.new
+      end
+      king = @@board['E1']
+      rook = @@board['H1']
+      if king.symbol != '♔' || rook.symbol != '♖' || !@@board['F1'].is_a?(Blank) || !@@board['G1'].is_a?(Blank)
+        false
+      elsif !king.unmoved || !rook.unmoved
+        false
+      elsif king_check('E1', 'white', board) || king_check('F1', 'white', board1) || king_check('G1', 'white', board2) || king_check('H1', 'white', board3)
+        false
+      else
+        true
+      end
+    else
+      board = @@board.dup
+      board1 = @@board.dup
+      board1['E8'] = Blank.new
+      board1['F8'] = King.new('black', 'F8')
+      board2 = @@board.dup
+      board2['E8'] = Blank.new
+      board2['G8'] = King.new('black', 'G8')
+      board3 = @@board.dup
+      board3['E8'] = Blank.new
+      board3['H8'] = King.new('black', 'H8')
+      if @@board['E1'].is_a?(King)
+        board['E1'] = Blank.new
+        board1['E1'] = Blank.new
+        board2['E1'] = Blank.new
+        board3['E1'] = Blank.new
+      end
+      king = @@board['E8']
+      rook = @@board['H8']
+      if king.symbol != '♚' || rook.symbol != '♜' || !@@board['F8'].is_a?(Blank) || !@@board['G8'].is_a?(Blank)
+        false
+      elsif !king.unmoved || !rook.unmoved
+        false
+      elsif king_check('E8', 'black', board) || king_check('F8', 'black', board1) || king_check('G8', 'black', board2) || king_check('H8', 'black', board3)
+        false
+      else
+        true
+      end
+    end
+  end
+
+  def castle_left(colour)
+    if colour == 'white'
+      board = @@board.dup
+      board1 = @@board.dup
+      board1['E1'] = Blank.new
+      board1['D1'] = King.new('white', 'D1')
+      board2 = @@board.dup
+      board2['E1'] = Blank.new
+      board2['C1'] = King.new('white', 'C1')
+      board3 = @@board.dup
+      board3['E1'] = Blank.new
+      board3['B1'] = King.new('white', 'B1')
+      board4 = @@board.dup
+      board4['E1'] = Blank.new
+      board4['A1'] = King.new('white', 'A1')
+      if @@board['E8'].is_a?(King)
+        board['E8'] = Blank.new
+        board1['E8'] = Blank.new
+        board2['E8'] = Blank.new
+        board3['E8'] = Blank.new
+        board4['E8'] = Blank.new
+      end
+      king = @@board['E1']
+      rook = @@board['A1']
+      if king.symbol != '♔' || rook.symbol != '♖' || !@@board['B1'].is_a?(Blank) || !@@board['C1'].is_a?(Blank) || !@@board['D1'].is_a?(Blank)
+        false
+      elsif !king.unmoved || !rook.unmoved
+        false
+      elsif king_check('E1', 'white', board) || king_check('D1', 'white', board1) || king_check('C1', 'white', board2) || king_check('B1', 'white', board3) || king_check('A1', 'white', board4)
+        false
+      else
+        true
+      end
+    else
+      board = @@board.dup
+      board1 = @@board.dup
+      board1['E8'] = Blank.new
+      board1['D8'] = King.new('black', 'D8')
+      board2 = @@board.dup
+      board2['E8'] = Blank.new
+      board2['C8'] = King.new('black', 'C8')
+      board3 = @@board.dup
+      board3['E8'] = Blank.new
+      board3['B8'] = King.new('black', 'B8')
+      board4 = @@board.dup
+      board4['E8'] = Blank.new
+      board4['A8'] = King.new('black', 'A8')
+      if @@board['E1'].is_a?(King)
+        board['E1'] = Blank.new
+        board1['E1'] = Blank.new
+        board2['E1'] = Blank.new
+        board3['E1'] = Blank.new
+        board4['E1'] = Blank.new
+      end
+      king = @@board['E8']
+      rook = @@board['A8']
+      if king.symbol != '♚' || rook.symbol != '♜' || !@@board['B8'].is_a?(Blank) || !@@board['C8'].is_a?(Blank) || !@@board['D8'].is_a?(Blank)
+        false
+      elsif !king.unmoved || !rook.unmoved
+        false
+      elsif king_check('E8', 'black', board) || king_check('D8', 'black', board1) || king_check('C8', 'black', board2) || king_check('B8', 'black', board3) || king_check('A8', 'black', board4)
+        false
+      else
+        true
+      end
+    end
   end
 end
 
