@@ -1,5 +1,5 @@
 class Game
-  attr_accessor :board
+  attr_accessor :board, :last_move_start
   def initialize
     puts "Welcome to your game of chess"
     print "Player 1 name: "
@@ -10,6 +10,7 @@ class Game
       @player2 = @player2 + '1'
     end
     @current_player = @player1
+    @@last_move_start = ''
 
     @@board = {
       'A1' => Rook.new('white', 'A1', 'unmoved'),
@@ -390,9 +391,18 @@ class Game
     end
     
     new_location = where_to_move(piece, colour)
+    puts new_location
     if new_location.is_a?(Blank) || new_location.nil?
     elsif @@board[location].is_a?(Pawn)
-      @@board[new_location] = Pawn.new(colour, new_location)
+      if @@board[new_location].is_a?(Blank) && new_location[1] == '6' && location[0] != new_location[0]
+        @@board[new_location] = Pawn.new(colour, new_location)
+        @@board[new_location[0] + (new_location[1].to_i - 1).to_s] = Blank.new
+      elsif @@board[new_location].is_a?(Blank) && new_location[1] == '3' && location[0] != new_location[0]
+        @@board[new_location] = Pawn.new(colour, new_location)
+        @@board[new_location[0] + (new_location[1].to_i + 1).to_s] = Blank.new
+      else
+        @@board[new_location] = Pawn.new(colour, new_location)
+      end
     elsif @@board[location].is_a?(Rook)
       @@board[new_location] = Rook.new(colour, new_location)
     elsif @@board[location].is_a?(Bishop)
@@ -428,6 +438,9 @@ class Game
     else
       @@board[location] = Blank.new
     end
+
+    @@last_move_start = location
+    return
   end
 
   def where_to_move(position, colour)
@@ -1159,6 +1172,65 @@ class Pawn < Game
                ['♙', '♘', '♗', '♖', '♕', '♔'].include?(board[right_column + (position_number.to_i + 1).to_s].symbol)
           positions.push(right_column + (position_number.to_i + 1).to_s)
         end
+      end
+    end
+
+    # en passant capture
+    positions.push(passant_right(position, colour))
+    positions.push(passant_left(position, colour))
+    positions.flatten!
+    positions
+  end
+
+  def passant_right(position, colour)
+    positions = []
+    right = (position[0].ord + 1).chr
+    if colour == 'white'
+      if position[0] == 'H' || position[1] != '5'
+        positions
+      elsif @@board[(right + position[1])].symbol != '♟︎'
+        positions
+      elsif @@last_move_start[1] != '7'
+        positions
+      else
+        positions.push(right + (position[1].to_i + 1).to_s)
+      end
+    else
+      if position[0] == 'H' || position[1] != '4'
+        positions
+      elsif @@board[(right + position[1])].symbol != '♙'
+        positions
+      elsif @@last_move_start[1] != '2'
+        positions
+      else
+        positions.push(right + (position[1].to_i - 1).to_s)
+      end
+    end
+    positions
+  end
+
+  def passant_left(position, colour)
+    positions = []
+    left = (position[0].ord - 1).chr
+    if colour == 'white'
+      if position[0] == 'A' || position[1] != '5'
+        positions
+      elsif @@board[(left + position[1])].symbol != '♟︎'
+        positions
+      elsif @@last_move_start[1] != '7'
+        positions
+      else
+        positions.push(left + (position[1].to_i + 1).to_s)
+      end
+    else
+      if position[0] == 'A' || position[1] != '4'
+        positions
+      elsif @@board[(left + position[1])].symbol != '♙'
+        positions
+      elsif @@last_move_start[1] != '2'
+        positions
+      else
+        positions.push(left + (position[1].to_i - 1).to_s)
       end
     end
     positions
