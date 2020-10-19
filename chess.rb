@@ -376,7 +376,9 @@ class Game
     until valid
       puts "#{@current_player} select a piece to move"
       location = gets.chomp.upcase
-      if @@board.key?(location)
+      if location == 'SAVE'
+        save
+      elsif @@board.key?(location)
         if @@board[location].is_a?(Blank)
           puts "There is no piece in this position", ""
         elsif @@board[location].colour == colour
@@ -487,6 +489,63 @@ class Game
     end
   end
 
+  def serialize
+    data = {
+      board: @@board,
+      current_player: @current_player,
+      last_move_start: @last_move_start,
+      player1: @player1,
+      player2: @player2
+    }
+    Marshal.dump(data)
+  end
+
+  def unserialize(string)
+    data = Marshal.load(string)
+    data
+  end
+
+  def save
+    file_name = ask_save_file
+    save_file = File.open(file_name, 'w')
+    save_file.puts(serialize)
+    save_file.close
+    puts "Game has been saved to Save File #{file_name[-5]}"
+    puts "\n\n"
+  end
+
+  def load_from_save
+    file_name = ask_save_file
+    save_file = File.open(file_name, 'r')
+    save_file.pos = 0
+    contents = unserialize(save_file.read)
+    @current_player = contents[:current_player]
+    @@board = contents[:board]
+    @last_move_start = contents[:last_move_start]
+    @player1 = contents[:player1]
+    @player2 = contents[:player2]
+    puts "Game has been loaded from save"
+  end
+
+  def ask_save_file
+    puts "Which save file would you like to use?"
+    puts ''
+    puts '1 2 3 4 5'
+    puts ''
+    valid = false
+    until valid
+      print 'Save file number: '
+      save_file = gets.chomp
+      if %w[1 2 3 4 5].include?(save_file)
+        valid = true
+      else
+        puts "Please enter a number from 1-5"
+      end
+    end
+    puts "\n\n"
+    "save/save_file#{save_file}.txt"
+  end
+
   def pawn_change
     if @current_player == @player1
       array = ['A8', 'B8', 'C8', 'D8', 'E8', 'F8', 'G8', 'H8']
@@ -544,6 +603,21 @@ class Game
   end
 
   def play
+    puts "Would you like to resume from a save? (yes/no)"
+    valid = false
+    until valid
+      input = gets.chomp.downcase
+      if input != 'yes' && input != 'no'
+        puts "Please enter yes or no"
+      elsif input == 'yes'
+        load_from_save
+        valid = true
+      else
+        valid = true
+      end
+    end
+    print_board
+    puts "To save game, enter 'save' at the start of a turn"
     win = false
     until win
       make_move

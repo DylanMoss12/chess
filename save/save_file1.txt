@@ -1,0 +1,68 @@
+{
+:
+board{EI"A1:ETo:	Rook	:@symbolI"♖;T:@colourI"
+white;T:@positionI"A1;T:@unmovedTI"B1;To:Knight;I"♘;T;	I"
+white;T;
+I"B1;TI"C1;To:Bishop;I"♗;T;	I"
+white;T;
+I"C1;TI"D1;To:
+Queen;I"♕;T;	I"
+white;T;
+I"D1;TI"E1;To:	King	;I"♔;T;	I"
+white;T;
+I"E1;T;TI"F1;To;;I"♗;T;	I"
+white;T;
+I"F1;TI"G1;To;;I"♘;T;	I"
+white;T;
+I"G1;TI"H1;To;	;I"♖;T;	I"
+white;T;
+I"H1;T;TI"A2;To:
+Blank;I"·;TI"B2;To:	Pawn;I"♙;T;	I"
+white;T;
+I"B2;TI"C2;To;;I"♙;T;	I"
+white;T;
+I"C2;TI"D2;To;;I"♙;T;	I"
+white;T;
+I"D2;TI"E2;To;;I"♙;T;	I"
+white;T;
+I"E2;TI"F2;To;;I"♙;T;	I"
+white;T;
+I"F2;TI"G2;To;;I"♙;T;	I"
+white;T;
+I"G2;TI"H2;To;;I"♙;T;	I"
+white;T;
+I"H2;TI"A3;To;;I"·;TI"B3;To;;I"·;TI"C3;To;;I"·;TI"D3;To;;I"·;TI"E3;To;;I"·;TI"F3;To;;I"·;TI"G3;To;;I"·;TI"H3;To;;I"·;TI"A4;To;;I"♙;T;	I"
+white;T;
+I"A4;TI"B4;To;;I"·;TI"C4;To;;I"·;TI"D4;To;;I"·;TI"E4;To;;I"·;TI"F4;To;;I"·;TI"G4;To;;I"·;TI"H4;To;;I"·;TI"A5;To;;I"·;TI"B5;To;;I"·;TI"C5;To;;I"·;TI"D5;To;;I"·;TI"E5;To;;I"·;TI"F5;To;;I"·;TI"G5;To;;I"·;TI"H5;To;;I"·;TI"A6;To;;I"·;TI"B6;To;;I"·;TI"C6;To;;I"·;TI"D6;To;;I"·;TI"E6;To;;I"·;TI"F6;To;;I"·;TI"G6;To;;I"·;TI"H6;To;;I"·;TI"A7;To;;I"♟︎;T;	I"
+black;T;
+I"A7;TI"B7;To;;I"♟︎;T;	I"
+black;T;
+I"B7;TI"C7;To;;I"♟︎;T;	I"
+black;T;
+I"C7;TI"D7;To;;I"♟︎;T;	I"
+black;T;
+I"D7;TI"E7;To;;I"♟︎;T;	I"
+black;T;
+I"E7;TI"F7;To;;I"♟︎;T;	I"
+black;T;
+I"F7;TI"G7;To;;I"♟︎;T;	I"
+black;T;
+I"G7;TI"H7;To;;I"♟︎;T;	I"
+black;T;
+I"H7;TI"A8;To;	;I"♜;T;	I"
+black;T;
+I"A8;T;TI"B8;To;;I"♞;T;	I"
+black;T;
+I"B8;TI"C8;To;;I"♝;T;	I"
+black;T;
+I"C8;TI"D8;To;;I"♛;T;	I"
+black;T;
+I"D8;TI"E8;To;	;I"♚;T;	I"
+black;T;
+I"E8;T;TI"F8;To;;I"♝;T;	I"
+black;T;
+I"F8;TI"G8;To;;I"♞;T;	I"
+black;T;
+I"G8;TI"H8;To;	;I"♜;T;	I"
+black;T;
+I"H8;T;T:current_playerI"k;T:last_move_start0:player1I"d;T:player2@
